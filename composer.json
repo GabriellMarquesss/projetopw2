@@ -1,0 +1,17 @@
+{
+    "name": "administrador/pw22022_introducao-main",
+    "type": "project",
+    "authors": [
+        {
+            "name": "GabriellMarquesss",
+            "email": "marquesgabriel768@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\Controllers\\": "src/App/controllers",
+            "App\\Models\\": "src/App/models"
+        }
+    }
+}
