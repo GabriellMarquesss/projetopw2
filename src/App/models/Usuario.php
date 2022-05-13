@@ -2,12 +2,31 @@
 
 
 namespace App\Models;
-class Cliente
+class Usuario
 {
+    private $id;
     private $nome;
-    private $telefone;
     private $email;
-    private $endereco;
+    private $senha;
+    private $telefone;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+
 
     /**
      * @return mixed
@@ -44,6 +63,22 @@ class Cliente
     /**
      * @return mixed
      */
+    public function getSenha()
+    {
+        return $this->senha;
+    }
+
+    /**
+     * @param mixed $senha
+     */
+    public function setSenha($senha)
+    {
+        $this->senha = $senha;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getEmail()
     {
         return $this->email;
@@ -57,21 +92,7 @@ class Cliente
         $this->email = $email;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getEndereco()
-    {
-        return $this->endereco;
-    }
 
-    /**
-     * @param mixed $endereco
-     */
-    public function setEndereco($endereco)
-    {
-        $this->endereco = $endereco;
-    }
 
 
 }
