@@ -37,20 +37,20 @@ class UsuarioController
     }
 
     public function listar(){
-        $sql = "SELECT  id, nome, email, telefone FROM usuario ORDER BY nome"
-        $statement = $this->conexao->query($sql, mode:\PDO::FETCH_ASSOC);
+        $sql = "SELECT  id, nome, email, telefone FROM usuario ORDER BY nome";
+        $statement = $this->conexao->query($sql, \PDO::FETCH_ASSOC);
         $lsretorno = array();
         foreach ($statement as $row) {
-            $lsretorno[] = $this->preencherUsuario($row)
+            $lsretorno[] = $this->preencherUsuario($row);
         }
         return $lsretorno;
     }
     public function preencherUsuario($row){
         $usuario = new usuario();
         $usuario->setId($row["id"]);
-        $usuario->getNome($row["nome"]);
+        $usuario->setNome($row["nome"]);
         $usuario->setEmail($row["email"]);
         $usuario->setTelefone($row["telefone"]);
-        return $usuario
+        return $usuario;
     }
 }

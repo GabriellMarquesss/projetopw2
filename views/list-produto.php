@@ -19,46 +19,46 @@ use App\Controllers\UsuarioController;
 </head>
 <body>
 <?php
-    include_once "menu.php";
+include_once "menu.php";
 ?>
 <div class="container">
     <div class="row">
-        <h4>Lista de Usuários</h4>
+        <h4>Lista de Produtos</h4>
     </div>
     <div class="row">
         <div class="col-3">
-            <a href="cad-usuario.php" class="btn btn-primary">Novo Usuário </a>
+            <a href="cad-produto.php.php" class="btn btn-primary">Novo Produto </a>
 
         </div>
     </div>
-<div class="row">
-<?php
-    $listaUsuarios = UsuarioController::getInstance()->listar();
- ?>
-   <table class="table table-hover">
-   <thread>
-   <tr>
-       <th>Nome</th>
-       <th>Email</th>
-       <th>-</th>
-       </tr>
-       </thread>
-       <tbody>
-       <?php
-       foreach ($listaUsuarios as $usuario){
-           echo "<tr>
+    <div class="row">
+        <?php
+        $listaUsuarios = UsuarioController::getInstance()->listar();
+        ?>
+        <table class="table table-hover">
+            <thread>
+                <tr>
+                    <th>Nome</th>
+                    <th>Cliente</th>
+                    <th>-</th>
+                </tr>
+            </thread>
+            <tbody>
+            <?php
+            foreach ($listaUsuarios as $usuario){
+                echo "<tr>
            <td>".$usuario->getNome()."</td>
-           <td>".$usuario->getEmail()."</td>
+           <td>".$usuario->getCliente()."</td>
            <td></td>
                  </tr>";
 
-       }
-       ?>
-           <tbody>
-       </table>
+            }
+            ?>
+            <tbody>
+        </table>
 
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>
