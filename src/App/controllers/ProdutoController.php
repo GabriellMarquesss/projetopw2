@@ -28,20 +28,20 @@ class ProdutoController
 
     public function inserir(Produto $produto)
     {
-        $sql = "INSERT INTO usuario (nome, descricao, valor, imagem) 
+        $sql = "INSERT INTO produto (nome, descricao, valor, imagem) 
                  VALUES (:nome, :descricao, :valor, :imagem)";
         $statement = $this->conexao->prepare($sql);
         $statement->bindValue(":nome", $produto->getNome());
         $statement->bindValue(":descricao", $produto->getDescricao());
-        $statement->bindValue(":valor", $usuario->getValor());
-        $statement->bindValue(":imagem", $usuario->getImagem());
+        $statement->bindValue(":valor", $produto->getValor());
+        $statement->bindValue(":imagem", $produto->getImagem());
 
         return $statement->execute();
     }
 
     public function listar()
     {
-        $sql = "SELECT  id, nome, descricao, valor, imagem FROM produto ORDER BY nome";
+        $sql = "SELECT  * FROM produto ORDER BY nome";
         $statement = $this->conexao->query($sql, \PDO::FETCH_ASSOC);
         $lsretorno = array();
         foreach ($statement as $row) {
@@ -60,6 +60,6 @@ class ProdutoController
         $produto->setImagem($row["imagem"]);
         return $produto;
     }
-}
+
 
 }

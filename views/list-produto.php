@@ -1,8 +1,8 @@
 <?php
 require_once __DIR__ . "/../vendor/autoload.php";
 
-use App\Models\Usuario;
-use App\Controllers\UsuarioController;
+use App\Models\Produto;
+use App\Controllers\ProdutoController;
 ?>
 <!doctype html>
 <html lang="en">
@@ -33,11 +33,12 @@ include_once "menu.php";
     </div>
     <div class="row">
         <?php
-        $listaUsuarios = UsuarioController::getInstance()->listar();
+        $listaProdutos = ProdutoController::getInstance()->listar();
         ?>
         <table class="table table-hover">
             <thread>
                 <tr>
+                    <th>Imagem</th>
                     <th>Nome</th>
                     <th>Cliente</th>
                     <th>-</th>
@@ -45,12 +46,13 @@ include_once "menu.php";
             </thread>
             <tbody>
             <?php
-            foreach ($listaUsuarios as $usuario){
+            foreach ($listaProdutos as $produto){
                 echo "<tr>
-           <td>".$usuario->getNome()."</td>
-           <td>".$usuario->getCliente()."</td>
-           <td></td>
-                 </tr>";
+                        <td><img src='./imagens/produtos/".$produto->getImagem()."' width='150px' height='150px'></td>
+                       <td>".$produto->getNome()."</td>
+                       <td>".$produto->getValor()."</td>
+                       <td></td>
+                      </tr>";
 
             }
             ?>
