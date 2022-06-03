@@ -3,6 +3,12 @@ require_once __DIR__ . "/../vendor/autoload.php";
 
 use App\Models\Produto;
 use App\Controllers\ProdutoController;
+$exclusao = false;
+if (isset($_GET['excluir'])){
+    if (ProdutoController::getInstance()->excluir($_GET['produto_id'])){
+        $exclusao = true;
+    }
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -22,12 +28,21 @@ use App\Controllers\ProdutoController;
 include_once "menu.php";
 ?>
 <div class="container">
+    <?php
+              if ($exclusao) {
+                  ?>
+    <div class="alert alert-danger" role="alert">
+        Produto excluído com sucesso!
+    </div>
+    <?php
+              }
+    ?>
     <div class="row">
         <h4>Lista de Produtos</h4>
     </div>
     <div class="row">
         <div class="col-3">
-            <a href="cad-produto.php.php" class="btn btn-primary">Novo Produto </a>
+            <a href="cad-produto.php" class="btn btn-primary">Novo Produto </a>
 
         </div>
     </div>
@@ -40,7 +55,7 @@ include_once "menu.php";
                 <tr>
                     <th>Imagem</th>
                     <th>Nome</th>
-                    <th>Cliente</th>
+                    <th>Valor</th>
                     <th>-</th>
                 </tr>
             </thread>
@@ -51,7 +66,9 @@ include_once "menu.php";
                         <td><img src='./imagens/produtos/".$produto->getImagem()."' width='150px' height='150px'></td>
                        <td>".$produto->getNome()."</td>
                        <td>".$produto->getValor()."</td>
-                       <td></td>
+                       <td><a href='list-produto.php?excluir=true&produto_id=".$produto->getId()."' class='waves-effect waves-light btn red' alt='Excluir' title='Excluir'><span class='material-icons'>delete</span>
+                       </a> 
+                       </td>
                       </tr>";
 
             }
