@@ -25,10 +25,19 @@ class ProdutoController
         $this->conexao = Conexao::getInstance();
 
     }
+     public function excluir($produto_id){
+        $produto = $this->buscarProduto($produto_id);
+        $dir = __DIR__."/../../../views/imagens/produtos/";
+        unlink($dir . $produto->getImagem());
+         $sql = "DELETE FROM produto WHERE id = :id";
+         $statement = $this->conexao->prepare($sql);
+         $statement->bindValue(":id", $produto_id);
+         return $statement->execute();
+     }
 
     public function inserir(Produto $produto)
     {
-        $sql = "INSERT INTO produto (nome, descricao, valor, imagem) 
+        $sql = "INSERT INTO produto (nome, descricao, valor, imagem);
                  VALUES (:nome, :descricao, :valor, :imagem)";
         $statement = $this->conexao->prepare($sql);
         $statement->bindValue(":nome", $produto->getNome());
@@ -49,7 +58,18 @@ class ProdutoController
         }
         return $lsretorno;
     }
-
+    public function buscarProduto($produto_id){
+        $sql = "SELECT  * FROM produto WHERE BY id = :id";
+        $statement = $this->conexao->prepare($sql);
+        $statement->bindValue( ":id", $produto_id);
+        $statement->execute();
+        $retornoBanco = $statement->fetchAll( \PDO::FETCH_ASSOC);
+        $produto = new Produto();
+        foreach ($retornoBanco as $row) {
+            $produto[] = $this->preencherProduto($row);
+        }
+        return $produto;
+    }
     public function preencherProduto($row)
     {
         $produto = new produto();

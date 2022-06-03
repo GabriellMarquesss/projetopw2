@@ -100,7 +100,7 @@ include_once "menu.php";
             </div>
             <div class="row">
                 <div class="col col-6">
-                    <a href="list-usuario.php" class="btn waves-effect waves-light red"><i class="material-icons left">cancel</i>Cancelar</a>
+                    <a href="list-produto.php" class="btn waves-effect waves-light red"><i class="material-icons left">cancel</i>Cancelar</a>
                 </div>
                 <div class="col col-6">
                     <button class="btn waves-effect waves-light" type="submit" name="enviar">Enviar
