@@ -3,6 +3,13 @@ require_once __DIR__ . "/../vendor/autoload.php";
 
 use App\Models\Produto;
 use App\Controllers\ProdutoController;
+$produto = new Produto();
+//se enviou algo via $_GET['alterar'] então a variável $produto recebe e execução do método buscarProduto da classe ProdutoController
+if (isset($_GET['alterar'])){
+    $produto = ProdutoController::getInstance()->buscarProduto($_GET['produto_id']);
+}
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -34,12 +41,18 @@ include_once "menu.php";
         if (isset($_POST['enviar'])){
 
             $produto = new Produto();
+            $produto ->setId($_POST['id']);
             $produto->setNome($_POST['nome']);
             $produto->setDescricao($_POST['descricao']);
             $produto->setValor($_POST['valor']);
 
-            if(isset($_FILES['imagem']))
-            {
+            if(isset($_FILES['imagem'])) {
+                if (!empty($_FILES['imagem']['name'])) {
+                    if ($produto->getImagem() != "") {
+                        $dir = __DIR__ . "/imagens/produtos/";
+                        unlink($dir . $produto->getImagem());
+                    }
+                }
                 $ext = strtolower(substr($_FILES['imagem']['name'],-4));
                 $new_name = date("Y.m.d-H.i.s") . $ext;
                 $dir = './imagens/produtos/';
@@ -47,7 +60,7 @@ include_once "menu.php";
                 $produto->setImagem($new_name);
             }
 
-            if (ProdutoController::getInstance()->inserir($produto)){
+            if (ProdutoController::getInstance()->gravar($produto)){
                 $sucesso = true;
             }
         }
@@ -61,10 +74,12 @@ include_once "menu.php";
         }
         ?>
         <form action="#" method="post" class="col s6 " enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<?php echo $produto->getId();?>">
             <div class="row">
                 <div class="input-field col ">
                     <i class="material-icons prefix">shopping_cart</i>
-                    <input id="icon_prefix" type="text" class="validate" name="nome" required>
+                    <input id="icon_prefix" type="text" class="validate" name="nome"
+                           required value="<?php echo $produto->getNome();?>">
                     <label for="icon_prefix">Nome</label>
                 </div>
 
@@ -72,14 +87,14 @@ include_once "menu.php";
             <div class="row">
                 <div class="input-field col ">
                     <i class="material-icons prefix">description</i>
-                    <textarea id="textarea1"  class="materialize-textarea" name="descricao" required></textarea>
+                    <textarea id="textarea1"  class="materialize-textarea" name="descricao" required><?php echo $produto->getDescricao();?></textarea>
                     <label for="textarea1">Descrição</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">price_change</i>
-                    <input id="icon_prefix" type="number" class="validate" name="valor" required>
+                    <input id="icon_prefix" type="number" class="validate" name="valor" required value="<?php echo $produto->getValor();?>">
                     <label for="icon_prefix">Valor</label>
                 </div>
             </div>

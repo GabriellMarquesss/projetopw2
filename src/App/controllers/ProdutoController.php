@@ -34,8 +34,25 @@ class ProdutoController
          $statement->bindValue(":id", $produto_id);
          return $statement->execute();
      }
+    public function gravar(Produto $produto){
+        if ($produto->getId() <= 0){
+            return $this->inserir($produto);
+        }else{
+            return $this->alterar($produto);
+        }
+    }
 
-    public function inserir(Produto $produto)
+    private function alterar(Produto $produto){
+        $sql = "UPDATE produto SET nome = :nome, descricao = :descricao, valor = :valor, imagem = :imagem WHERE id = :id";
+        $statement = $this->conexao->prepare($sql);
+        $statement->bindValue(":nome", $produto->getNome());
+        $statement->bindValue(":descricao", $produto->getDescricao());
+        $statement->bindValue(":valor", $produto->getValor());
+        $statement->bindValue(":imagem", $produto->getImagem());
+        $statement->bindValue("id", $produto->getId());
+    }
+
+    private function inserir(Produto $produto)
     {
         $sql = "INSERT INTO produto (nome, descricao, valor, imagem);
                  VALUES (:nome, :descricao, :valor, :imagem)";
@@ -59,14 +76,14 @@ class ProdutoController
         return $lsretorno;
     }
     public function buscarProduto($produto_id){
-        $sql = "SELECT  * FROM produto WHERE BY id = :id";
+        $sql = "SELECT  * FROM produto WHERE id = :id";
         $statement = $this->conexao->prepare($sql);
         $statement->bindValue( ":id", $produto_id);
         $statement->execute();
         $retornoBanco = $statement->fetchAll( \PDO::FETCH_ASSOC);
         $produto = new Produto();
         foreach ($retornoBanco as $row) {
-            $produto[] = $this->preencherProduto($row);
+            $produto = $this->preencherProduto($row);
         }
         return $produto;
     }
