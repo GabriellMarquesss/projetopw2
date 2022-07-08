@@ -53,4 +53,17 @@ class UsuarioController
         $usuario->setTelefone($row["telefone"]);
         return $usuario;
     }
+    public function login($usuario){
+        $sql = "SELECT  id, nome, email, telefone  FROM usuario WHERE email = :email AND senha = :senha";
+        $statement = $this->conexao->prepare($sql);
+        $statement->bindValue( ":id", $usuario->getEmail());
+        $statement->bindValue( ":id", $usuario->getSenha());
+        $statement->execute();
+        $retornoBanco = $statement->fetchAll( \PDO::FETCH_ASSOC);
+        $usuario_retorno = new Usuario();
+        foreach ($retornoBanco as $row) {
+            $usuario_retorno = $this->preencherUsuario($row);
+        }
+        return $usuario_retorno;
+    }
 }
