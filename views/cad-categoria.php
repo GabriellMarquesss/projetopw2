@@ -1,9 +1,15 @@
 <?php
-require_once __DIR__ . "/../../vendor/autoload.php";
+require_once __DIR__ ."/../../vendor/autoload.php";
 require_once 'verifica-sessao.php';
 
-use App\Models\Usuario;
-use App\Controllers\UsuarioController;
+use App\Models\Categoria;
+use App\Controllers\CategoriaController;
+$categoria = new Categoria();
+if (isset($_GET['alterar'])){
+    $categoria = CategoriaController::getInstance()->buscar($_GET['produto_id']);
+}
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -24,7 +30,7 @@ include_once "menu.php";
 ?>
 <div class="container">
     <div class="row">
-        <h4>Cadastro de Usuários</h4>
+        <h4>Cadastro de Categorias</h4>
     </div>
     <div class="row">
 
@@ -34,14 +40,10 @@ include_once "menu.php";
         $sucesso = false;
         if (isset($_POST['enviar'])){
 
-            $usuario = new Usuario();
-            $usuario->setNome($_POST['nome']);
-            $usuario->setTelefone($_POST['telefone']);
-            $usuario->setEmail($_POST['email']);
-            $usuario->setSenha(md5($_POST['senha']));
+            $categoria->setId($_POST['id']);
+            $categoria->setDescricao($_POST['descricao']);
 
-
-            if (UsuarioController::getInstance()->inserir($usuario)){
+            if (CategoriaController::getInstance()->gravar($categoria)){
                 $sucesso = true;
             }
         }
@@ -49,38 +51,22 @@ include_once "menu.php";
         if ($sucesso) {
             ?>
             <div class="alert alert-primary" role="alert">
-                Usuário inserido com sucesso!
+                Categoria inserida com sucesso!
             </div>
             <?php
         }
         ?>
-        <form action="#" method="post" class="col s6 ">
-            <div class="row">
-                <div class="input-field col s6">
-                    <i class="material-icons prefix">account_circle</i>
-                    <input id="icon_prefix" type="text" class="validate" name="nome" required>
-                    <label for="icon_prefix">Nome</label>
-                </div>
-                <div class="input-field col s6">
-                    <i class="material-icons prefix">phone</i>
-                    <input id="icon_prefix" type="text" class="validate" name="telefone" required>
-                    <label for="icon_prefix">Telefone</label>
-                </div>
-            </div>
+        <form action="#" method="post" class="col s6 " enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<?php echo $categoria->getId();?>">
             <div class="row">
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">email</i>
-                    <input id="icon_prefix" type="email" class="validate" name="email" required>
-                    <label for="icon_prefix">Email</label>
+                    <i class="material-icons prefix">description</i>
+                    <input id="icon_prefix" type="text" class="validate" name="descricao"
+                           required value="<?php echo $categoria->getDescricao();?>">
+                    <label for="icon_prefix">Descricão</label>
                 </div>
             </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">lock</i>
-                    <input id="senha" type="password" class="validate" name="senha" required>
-                    <label for="senha">Senha</label>
-                </div>
-            </div>
+
             <div class="row">
                 <div class="col col-6">
                     <a href="list-usuario.php" class="btn waves-effect waves-light red"><i class="material-icons left">cancel</i>Cancelar</a>

@@ -1,5 +1,5 @@
-<?php
-require_once __DIR__ . "/../vendor/autoload.php";
+<<?php
+require_once __DIR__ . "/../../vendor/autoload.php";
 require_once 'verifica-sessao.php';
 
 use App\Models\Usuario;
@@ -20,44 +20,47 @@ use App\Controllers\UsuarioController;
 </head>
 <body>
 <?php
-    include_once "menu.php";
+include_once "menu.php";
 ?>
 <div class="container">
     <div class="row">
         <h4>Lista de Usuários</h4>
     </div>
     <div class="row">
-        <div class="col-3">
-            <a href="cad-usuario.php" class="btn btn-primary">Novo Usuário </a>
-
+        <div class="col-2">
+            <a href="cad-usuario.php" class="btn-floating btn-large waves-effect waves-light">
+                <i class="material-icons">add</i>
+            </a>
         </div>
     </div>
-<div class="row">
-<?php
-    $listaUsuarios = UsuarioController::getInstance()->listar();
- ?>
-   <table class="table table-hover">
-   <thread>
-   <tr>
-       <th>Nome</th>
-       <th>Email</th>
-       <th>-</th>
-       </tr>
-       </thread>
-       <tbody>
-       <?php
-       foreach ($listaUsuarios as $usuario){
-           echo "<tr>
-           <td>".$usuario->getNome()."</td>
-           <td>".$usuario->getEmail()."</td>
-           <td></td>
-                 </tr>";
+    <div class="row">
+        <?php
+        $listaUsuarios = UsuarioController::getInstance()->listar();
+        ?>
 
-       }
-       ?>
-           <tbody>
-       </table>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>-</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            foreach ($listaUsuarios as $usuario){
+                echo "<tr>
+                                <td>".$usuario->getNome()."</td>
+                                <td>".$usuario->getEmail()."</td>
+                                <td></td>
+                              </tr>";
+            }
+            ?>
 
+
+            </tbody>
+        </table>
+    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

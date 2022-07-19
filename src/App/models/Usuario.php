@@ -1,7 +1,7 @@
 <?php
 
-
 namespace App\Models;
+
 class Usuario
 {
     private $id;
@@ -29,8 +29,6 @@ class Usuario
     {
         $this->id = $id;
     }
-
-
 
     /**
      * @return mixed
@@ -67,22 +65,6 @@ class Usuario
     /**
      * @return mixed
      */
-    public function getSenha()
-    {
-        return $this->senha;
-    }
-
-    /**
-     * @param mixed $senha
-     */
-    public function setSenha($senha)
-    {
-        $this->senha = $senha;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getEmail()
     {
         return $this->email;
@@ -96,6 +78,21 @@ class Usuario
         $this->email = $email;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getSenha()
+    {
+        return $this->senha;
+    }
+
+    /**
+     * @param mixed $senha
+     */
+    public function setSenha($senha)
+    {
+        $this->senha = $senha;
+    }
 
 
 

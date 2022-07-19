@@ -2,13 +2,23 @@
 
 namespace App\Models;
 
-class Produto
-{
+class Produto{
     private $id;
     private $nome;
     private $descricao;
     private $valor;
     private $imagem;
+    private $categoria;
+
+    /**
+     * @param $id
+     */
+    public function __construct()
+    {
+        $this->id = 0;
+        $this->categoria = new Categoria();
+    }
+
 
     /**
      * @return mixed
@@ -93,5 +103,17 @@ class Produto
     /**
      * @return mixed
      */
+    public function getCategoria()
+    {
+        return $this->categoria;
+    }
+
+    /**
+     * @param mixed $categoria
+     */
+    public function setCategoria($categoria)
+    {
+        $this->categoria = $categoria;
+    }
 
 }
